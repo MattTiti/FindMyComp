@@ -13,13 +13,11 @@ export async function POST(req) {
         },
         params: {
           q: searchQuery, // Use the refined query
-          count: 20, // Number of results to return
+          count: 15, // Number of results to return
           responseFilter: "Webpages", // Focus on webpages
         },
       }
     );
-
-    console.log(searchResponse?.data?.webPages?.value);
 
     return NextResponse.json({
       results: searchResponse?.data?.webPages?.value,

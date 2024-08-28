@@ -1,7 +1,7 @@
 import themes from "daisyui/src/theming/themes";
 
 const config = {
-  appName: "FindMyComp",
+  appName: "Find My Comp",
   appDescription:
     "The AI powered search tool to help you find your competition",
   domainName: "findmycomp.app",
