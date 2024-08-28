@@ -19,7 +19,7 @@ export async function POST(req) {
 
           1. An optimized search query to find official product websites or SaaS platforms.
 
-          2. A summary of similar products or services that might match the description.
+          2. A summary of similar products or services that might match the description. If there are multiple products, list them as bullet points or a numbered list. Ensure the list is clearly formatted for easy readability.
 
           Please format your response as follows:
 
@@ -47,7 +47,7 @@ export async function POST(req) {
 
     let searchQuery = searchQueryMatch ? searchQueryMatch[1].trim() : "";
     const summary = summaryMatch ? summaryMatch[1].trim() : "";
-
+    console.log(summary);
     // Remove surrounding quotes from the searchQuery if present
     searchQuery = searchQuery.replace(/^["']|["']$/g, "");
 

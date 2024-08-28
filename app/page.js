@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import SearchBar from "@/components/SearchBar";
 import Results from "@/components/Results";
 import Spinner from "@/components/Spinner";
+import { SearchCheck } from "lucide-react";
 
 export default function HomePage() {
   const [results, setResults] = useState([]);
+  const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
   const [transitionClass, setTransitionClass] = useState("");
@@ -42,7 +44,11 @@ export default function HomePage() {
         body: JSON.stringify({ description }),
       });
       const queryData = await queryResponse.json();
+      console.log("Query Data:", queryData);
       const searchQuery = queryData.searchQuery;
+      const gptSummary = queryData.summary;
+
+      setSummary(gptSummary);
       console.log("Search Query:", searchQuery);
 
       setLoadingTextWithTransition("Performing search...");
@@ -68,9 +74,12 @@ export default function HomePage() {
   return (
     <div className="container mx-auto p-4 min-h-screen">
       <div className="flex flex-col justify-center items-center mt-20">
-        <h1 className="text-4xl font-bold">Find My Comp</h1>
+        <div className="flex items-center gap-2">
+          <SearchCheck className="h-9 w-9 inline-block" />
+          <h1 className="text-4xl font-bold">Find My Comp</h1>
+        </div>
         <h2 className="text-md font-semibold mb-4 dark:text-zinc-400">
-          Search for websites, SaaS, or products
+          Describe your product and find your competition
         </h2>
         <SearchBar onSearch={handleSearch} />
         {loading ? (
@@ -83,7 +92,7 @@ export default function HomePage() {
             </span>
           </div>
         ) : (
-          <Results results={results} />
+          <Results results={results} summary={summary} />
         )}
       </div>
     </div>

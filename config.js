@@ -3,7 +3,7 @@ import themes from "daisyui/src/theming/themes";
 const config = {
   appName: "FindMyComp",
   appDescription:
-    "The expense tracker powered by OpenAI to help you save time and money",
+    "The AI powered search tool to help you find your competition",
   domainName: "findmycomp.app",
   colors: {
     theme: "dark",

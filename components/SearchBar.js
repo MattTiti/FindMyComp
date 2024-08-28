@@ -20,7 +20,7 @@ export default function SearchBar({ onSearch }) {
         placeholder="Describe your product"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="w-full rounded-full"
+        className="w-full rounded-full px-4"
       />
       <Button onClick={handleSearch} variant="primary" className="self-end">
         Search
