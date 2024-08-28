@@ -47,12 +47,12 @@ export async function POST(req) {
 
     let searchQuery = searchQueryMatch ? searchQueryMatch[1].trim() : "";
     const summary = summaryMatch ? summaryMatch[1].trim() : "";
-    console.log(summary);
+
     // Remove surrounding quotes from the searchQuery if present
     searchQuery = searchQuery.replace(/^["']|["']$/g, "");
 
     // Refine the search query further
-    const refinedSearchQuery = `${searchQuery} -review -blog -news -best -top -youtube`;
+    const refinedSearchQuery = `${searchQuery} -blog -news -best -top -youtube`;
 
     // Return both the search query and the summary
     return NextResponse.json({ searchQuery: refinedSearchQuery, summary });

@@ -35,7 +35,7 @@ export default function HomePage() {
 
   const handleSearch = async (description) => {
     setLoading(true);
-    setLoadingTextWithTransition("Generating search query...");
+    setLoadingTextWithTransition("Refining search query");
 
     try {
       const queryResponse = await fetch("/api/generate-query", {
@@ -44,14 +44,12 @@ export default function HomePage() {
         body: JSON.stringify({ description }),
       });
       const queryData = await queryResponse.json();
-      console.log("Query Data:", queryData);
       const searchQuery = queryData.searchQuery;
       const gptSummary = queryData.summary;
 
       setSummary(gptSummary);
-      console.log("Search Query:", searchQuery);
 
-      setLoadingTextWithTransition("Performing search...");
+      setLoadingTextWithTransition("Performing search");
 
       const searchResponse = await fetch("/api/search", {
         method: "POST",
@@ -60,7 +58,6 @@ export default function HomePage() {
       });
       const searchData = await searchResponse.json();
 
-      console.log("Search Results:", searchData.results);
       setResults(searchData.results);
     } catch (error) {
       console.error("Error during search:", error);
