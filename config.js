@@ -10,7 +10,7 @@ const config = {
     main: themes["light"]["primary"],
     toast: "#000000",
   },
-  googleAnalyticsId: "",
+  googleAnalyticsId: "G-T6HFZR00M2",
 };
 
 export default config;
