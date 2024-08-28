@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card"; // Adjust the import path as needed
 import { ChevronRight } from "lucide-react";
 import NoResults from "@/app/no-results.svg";
+import Promo from "@/components/Promo";
+
 export default function Results({ results }) {
   if (!results || !results?.length)
     return (
@@ -20,7 +22,7 @@ export default function Results({ results }) {
     );
 
   return (
-    <div className="flex flex-col gap-4 w-3/5 mt-6">
+    <div className="flex flex-col gap-4 w-3/5 my-6">
       {results.map((result, index) => (
         <Card key={index} className="flex items-center p-4">
           {result.thumbnailUrl && (
@@ -48,6 +50,7 @@ export default function Results({ results }) {
           </CardFooter>
         </Card>
       ))}
+      <Promo />
     </div>
   );
 }

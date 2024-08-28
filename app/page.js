@@ -1,27 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "@/components/SearchBar";
 import Results from "@/components/Results";
 import Spinner from "@/components/Spinner";
+
 export default function HomePage() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState("");
+  const [transitionClass, setTransitionClass] = useState("");
+
+  useEffect(() => {
+    // Trigger the fade-out transition
+    if (loadingText) {
+      setTransitionClass("opacity-0 -translate-y-2");
+      const timer = setTimeout(() => {
+        // Trigger the fade-in transition with new text
+        setTransitionClass("opacity-100 translate-y-0");
+      }, 150);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loadingText]);
+
+  const setLoadingTextWithTransition = (text) => {
+    setTransitionClass("opacity-0 -translate-y-2");
+    setTimeout(() => {
+      setLoadingText(text);
+    }, 150);
+  };
 
   const handleSearch = async (description) => {
     setLoading(true);
+    setLoadingTextWithTransition("Generating search query...");
+
     try {
-      const response = await fetch("/api/search", {
+      const queryResponse = await fetch("/api/generate-query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ description }),
       });
-      const data = await response.json();
-      setResults(data.results);
+      const queryData = await queryResponse.json();
+      const searchQuery = queryData.searchQuery;
+      console.log("Search Query:", searchQuery);
+
+      setLoadingTextWithTransition("Performing search...");
+
+      const searchResponse = await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ searchQuery }),
+      });
+      const searchData = await searchResponse.json();
+
+      console.log("Search Results:", searchData.results);
+      setResults(searchData.results);
     } catch (error) {
       console.error("Error during search:", error);
+      setLoadingTextWithTransition("Error occurred during search");
     } finally {
       setLoading(false);
+      setLoadingText("");
     }
   };
 
@@ -34,7 +74,14 @@ export default function HomePage() {
         </h2>
         <SearchBar onSearch={handleSearch} />
         {loading ? (
-          <Spinner className="mt-52" />
+          <div className="flex items-center mt-52">
+            <Spinner />
+            <span
+              className={`ml-4 text-lg font-medium transition-all duration-150 transform ${transitionClass}`}
+            >
+              {loadingText}
+            </span>
+          </div>
         ) : (
           <Results results={results} />
         )}
