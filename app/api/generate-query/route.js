@@ -50,7 +50,7 @@ export async function POST(req) {
 
     // Remove surrounding quotes from the searchQuery if present
     searchQuery = searchQuery.replace(/^["']|["']$/g, "");
-    console.log(searchQuery);
+
     // Refine the search query further
     const refinedSearchQuery = `${searchQuery} -blog -news -best -top -youtube`;
 
