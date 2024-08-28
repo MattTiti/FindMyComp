@@ -29,7 +29,7 @@ export default function Promo() {
             rel="noopener noreferrer"
             className="underline text-white"
           >
-            <Button className="p-6 group">
+            <Button className="p-4 group">
               <svg
                 className="mr-2 w-5 h-5 fill-primary-content group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-200"
                 viewBox="0 0 375 509"
